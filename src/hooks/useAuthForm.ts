@@ -18,7 +18,6 @@ export const useAuthForm = () => {
     const result = validateAuthForm({ email, password });
 
     if (!result.success) {
-      // Changed from toasts() to addToast()
       addToast({
         title: "Validation Error",
         description: result.error.errors[0]?.message || "Invalid input",
@@ -41,14 +40,12 @@ export const useAuthForm = () => {
     setIsLoading(false);
 
     if (error) {
-      // Changed from toasts() to addToast()
       addToast({
         title: "Sign Up Failed",
         description: getAuthErrorMessage(error),
         variant: "destructive",
       });
     } else {
-      // Changed from toasts() to addToast()
       addToast({
         title: "Welcome!",
         description: "Your account has been created successfully.",
@@ -68,7 +65,6 @@ export const useAuthForm = () => {
     setIsLoading(false);
 
     if (error) {
-      // Changed from toasts() to addToast()
       addToast({
         title: "Sign In Failed",
         description: getAuthErrorMessage(error),
@@ -91,7 +87,6 @@ export const useAuthForm = () => {
     setIsLoading(false);
 
     if (error) {
-      // Changed from toasts() to addToast()
       addToast({
         title: "Google Sign In Failed",
         description: getAuthErrorMessage(error),
