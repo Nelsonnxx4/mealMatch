@@ -1,5 +1,7 @@
 import React from "react";
 
+import { cn } from "@/utils/cn";
+
 interface InputProps {
   label?: string;
   type?: "text" | "email" | "password" | "number" | "tel";
@@ -16,7 +18,7 @@ interface InputProps {
   className: string;
 }
 
-export const Input = ({
+export const ReusableInput = ({
   label,
   type = "text",
   name,
@@ -48,25 +50,20 @@ export const Input = ({
         )}
 
         <input
-          type={type}
+          className={cn(
+            "px-4 py-2",
+            icon && "pl-11",
+            error
+              ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+              : "border-gray-200 focus:border-orange-500 focus:ring-orange-500"
+          )}
+          disabled={disabled}
           name={name}
+          placeholder={placeholder}
+          type={type}
           value={value}
           onChange={onChange}
           onKeyPress={onKeyPress}
-          placeholder={placeholder}
-          disabled={disabled}
-          className={`
-            w-full px-4 py-10 border rounded-xl transition
-            ${icon ? "pl-11" : ""}
-            ${
-              error
-                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                : "border-gray-200 focus:border-orange-500 focus:ring-orange-500"
-            }
-            focus:ring-2 focus:outline-none
-            disabled:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60
-            placeholder:text-gray-400
-          `}
         />
       </div>
 

@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
 import { Divider } from "@heroui/divider";
 
 import { useAuthForm } from "@/hooks/useAuthForm";
 import { ToastContainer } from "@/components/Toast";
-import { GoogleIcon } from "@/components/Icons";
 import { useAuthStore } from "@/stores/authStore";
-import { Input } from "@/components/ui/Input";
+import { ReusableInput } from "@/components/ui/ReusableInput";
 import { Button } from "@/components/ui/Button";
 
 const AuthPage = () => {
@@ -35,7 +33,7 @@ const AuthPage = () => {
     <div className="h-screen w-screen flex items-center justify-center">
       <ToastContainer toasts={toasts} onRemove={removeToast} />
 
-      <div className="w-[90%] h-max bg-background-50">
+      <div className="w-[90%] h-max bg-white">
         <div className="flex flex-col gap-3 items-center">
           <div className="flex flex-col gap-1 items-center">
             <h1 className="text-2xl font-bold">
@@ -47,21 +45,23 @@ const AuthPage = () => {
           </div>
         </div>
 
-        <div className="gap-4">
+        <div className="w-full">
           <form
-            className="flex flex-col gap-4"
+            className=" w-full flex flex-col gap-4"
             onSubmit={isSignUp ? handleSignUp : handleSignIn}
           >
-            <Input
+            <ReusableInput
+              className="py-2 bg-blue-300"
               label="Email"
               placeholder="you@example.com"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="py-2 bg-blue-300"
             />
+            <input className="w-full py-2 px-2" type="email" />
 
-            <Input
+            <ReusableInput
+              className="py-2"
               label="Password"
               placeholder="Enter your password"
               type="password"
