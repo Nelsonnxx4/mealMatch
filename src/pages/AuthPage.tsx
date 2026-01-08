@@ -5,7 +5,7 @@ import { Divider } from "@heroui/divider";
 import { useAuthForm } from "@/hooks/useAuthForm";
 import { ToastContainer } from "@/components/Toast";
 import { useAuthStore } from "@/stores/authStore";
-import { ReusableInput } from "@/components/ui/ReusableInput";
+import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 
 const AuthPage = () => {
@@ -50,7 +50,7 @@ const AuthPage = () => {
             className=" w-full flex flex-col gap-4"
             onSubmit={isSignUp ? handleSignUp : handleSignIn}
           >
-            <ReusableInput
+            <Input
               className="py-2 bg-blue-300"
               label="Email"
               placeholder="you@example.com"
@@ -58,9 +58,8 @@ const AuthPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input className="w-full py-2 px-2" type="email" />
 
-            <ReusableInput
+            <Input
               className="py-2"
               label="Password"
               placeholder="Enter your password"

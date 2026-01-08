@@ -15,10 +15,10 @@ interface InputProps {
   required?: boolean;
   icon?: React.ReactNode;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  className: string;
+  className?: string;
 }
 
-export const ReusableInput = ({
+export const Input = ({
   label,
   type = "text",
   name,
@@ -36,7 +36,7 @@ export const ReusableInput = ({
   return (
     <div className={`w-full ${className}`}>
       {label && (
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-sm font-semibold text-gray-600 mb-2">
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
@@ -51,11 +51,12 @@ export const ReusableInput = ({
 
         <input
           className={cn(
-            "px-4 py-2",
+            "w-full px-4 py-2 border  rounded-md transition-all duration-200 outline-none",
             icon && "pl-11",
             error
-              ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-              : "border-gray-200 focus:border-orange-500 focus:ring-orange-500"
+              ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200"
+              : "border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200",
+            disabled && "bg-gray-50 cursor-not-allowed opacity-60"
           )}
           disabled={disabled}
           name={name}

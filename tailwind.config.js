@@ -12,9 +12,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          100: "#ffb51a",
-          50: "#ffbf58",
+        main: {
+          300: "#ff561a",
+          200: "#ff6b3d",
+          100: "#ff7e57",
+          50: "#ff906e",
         },
         background: {
           100: "#fcfcfc",

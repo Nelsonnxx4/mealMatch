@@ -4,13 +4,7 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
-  variant?:
-    | "primary"
-    | "secondary"
-    | "success"
-    | "danger"
-    | "outline"
-    | "ghost";
+  variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg" | "xl";
   disabled?: boolean;
   isLoading?: boolean;
@@ -34,17 +28,13 @@ export const Button = ({
   className = "",
 }: ButtonProps) => {
   const baseStyles =
-    "font-semibold rounded-xl transition transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2";
+    "font-semibold rounded-md transition  focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2";
 
   const variants = {
     primary:
-      "bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 shadow-lg focus:ring-orange-500",
+      "bg-primary-300 text-white hover:from-orange-600 hover:to-red-600 shadow-lg focus:ring-orange-500",
     secondary:
       "bg-gray-600 text-white hover:bg-gray-700 shadow-md focus:ring-gray-500",
-    success:
-      "bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 shadow-lg focus:ring-green-500",
-    danger:
-      "bg-red-500 text-white hover:bg-red-600 shadow-md focus:ring-red-500",
     outline:
       "border-2 border-orange-500 text-orange-600 hover:bg-orange-50 focus:ring-orange-500",
     ghost: "text-orange-600 hover:bg-orange-50 focus:ring-orange-500",
