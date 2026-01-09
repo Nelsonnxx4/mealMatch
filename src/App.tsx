@@ -20,10 +20,6 @@ function App() {
 
   return (
     <Routes>
-      <Route element={<LandingPage />} path="/" />
-      <Route element={<PricingPage />} path="/pricing" />
-      <Route element={<AuthPage />} path="/auth" />
-      <Route element={<Errorpage />} path="*" />
       <Route
         element={
           <ProtectedRoute>
@@ -32,6 +28,10 @@ function App() {
         }
         path="/home"
       />
+      <Route element={<LandingPage />} path="/" />
+      <Route element={<PricingPage />} path="/pricing" />
+      <Route element={<AuthPage />} path="/auth" />
+      <Route element={<Errorpage />} path="*" />
     </Routes>
   );
 }

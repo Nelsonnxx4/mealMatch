@@ -7,7 +7,7 @@ import { ToastContainer } from "@/components/Toast";
 import { useAuthStore } from "@/stores/authStore";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { GoogleIcon } from "@/components/Icons";
+import { GoogleIcon } from "@/components/icons";
 
 const AuthPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -52,7 +52,6 @@ const AuthPage = () => {
             onSubmit={isSignUp ? handleSignUp : handleSignIn}
           >
             <Input
-              className="bg-blue-300"
               label="Email"
               placeholder="you@example.com"
               type="email"
@@ -97,7 +96,7 @@ const AuthPage = () => {
           <p className="text-sm text-default-500">
             {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
             <button
-              className="text-main-100 underline font-semibold "
+              className="text-orange-400 underline font-semibold "
               type="button"
               onClick={() => setIsSignUp(!isSignUp)}
             >

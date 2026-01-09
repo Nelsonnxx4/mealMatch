@@ -93,6 +93,8 @@ export const useAuthForm = () => {
         variant: "destructive",
       });
     }
+
+    navigate("/home");
   };
 
   const resetForm = () => {

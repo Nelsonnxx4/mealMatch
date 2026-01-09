@@ -6,7 +6,7 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
-  variant?: "primary" | "secondary" | "outline" | "ghost";
+  variant?: "primary" | "secondary" | "outline";
   size?: "sm" | "md" | "lg";
   disabled?: boolean;
   isLoading?: boolean;
@@ -34,10 +34,10 @@ export const Button = ({
 
   const variants = {
     primary:
-      "bg-main-300 text-[#ffff] hover:bg-main-100 shadow-lg focus:ring-main-50 ",
-    secondary: "bg-[#dfdede] text-main-200 shadow-md focus:ring-main-50",
-    outline: "border hover:bg-slate-500 focus:ring-orange-500",
-    ghost: "text-orange-600 hover:bg-orange-50 focus:ring-orange-500",
+      "bg-orange-500 text-white hover:bg-main-100 shadow-lg focus:ring-orange-50 ",
+    secondary: "bg-gray-100 text-orange-200 shadow-md focus:ring-orange-50",
+    outline:
+      "border-1 border-slate-300 hover:bg-slate-100 focus:ring-orange-500",
   };
 
   const sizes = {
