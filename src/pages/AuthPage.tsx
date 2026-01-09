@@ -7,6 +7,7 @@ import { ToastContainer } from "@/components/Toast";
 import { useAuthStore } from "@/stores/authStore";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { GoogleIcon } from "@/components/Icons";
 
 const AuthPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -33,7 +34,7 @@ const AuthPage = () => {
     <div className="h-screen w-screen flex items-center justify-center">
       <ToastContainer toasts={toasts} onRemove={removeToast} />
 
-      <div className="w-[90%] h-max bg-white">
+      <div className="w-[90%] md:max-w-[50%] lg:max-w-[40%] xl:max-w-[30%] flex justify-center items-center flex-col h-max md:bg-[#ffff] md:p-6 rounded md:shadow-md">
         <div className="flex flex-col gap-3 items-center">
           <div className="flex flex-col gap-1 items-center">
             <h1 className="text-2xl font-bold">
@@ -45,13 +46,13 @@ const AuthPage = () => {
           </div>
         </div>
 
-        <div className="w-full">
+        <div className="w-full space-y-4">
           <form
-            className=" w-full flex flex-col gap-4"
+            className=" w-full flex justify-center items-center flex-col gap-4"
             onSubmit={isSignUp ? handleSignUp : handleSignIn}
           >
             <Input
-              className="py-2 bg-blue-300"
+              className="bg-blue-300"
               label="Email"
               placeholder="you@example.com"
               type="email"
@@ -60,7 +61,7 @@ const AuthPage = () => {
             />
 
             <Input
-              className="py-2"
+              className=""
               label="Password"
               placeholder="Enter your password"
               type="password"
@@ -80,22 +81,23 @@ const AuthPage = () => {
             </span>
           </div>
 
-          <Button
-            className="w-full"
-            isLoading={isLoading}
-            onClick={handleGoogleSignIn}
-          >
-            Continue with Google
-          </Button>
+          <div className="flex justify-center w-full ">
+            <Button
+              icon={<GoogleIcon />}
+              isLoading={isLoading}
+              variant="outline"
+              onClick={handleGoogleSignIn}
+            >
+              Continue with Google
+            </Button>
+          </div>
         </div>
 
-        <Divider />
-
-        <div className="justify-center">
+        <div className="justify-center mt-8">
           <p className="text-sm text-default-500">
             {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
             <button
-              className="text-primary font-semibold hover:underline"
+              className="text-main-100 underline font-semibold "
               type="button"
               onClick={() => setIsSignUp(!isSignUp)}
             >
@@ -104,8 +106,8 @@ const AuthPage = () => {
           </p>
         </div>
 
-        <Link className="text-center pb-4" to="/">
-          <Button size="sm">Back to Home</Button>
+        <Link className="text-center py-4 underline" to="/">
+          Back to Home
         </Link>
       </div>
     </div>

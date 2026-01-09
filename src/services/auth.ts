@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 
 import { supabaseApi } from "@/config/axios";
+import { supabase } from "@/config/supabase";
 
 export interface AuthResponse {
   data: any;
@@ -53,24 +54,17 @@ export const signInWithEmail = async (
   }
 };
 
-export const signInWithGoogle = async (): Promise<AuthResponse> => {
+export const signInWithGoogle = async () => {
   const redirectUrl = `${window.location.origin}/`;
 
-  try {
-    const { data } = await supabaseApi.get("/auth/v1/authorize", {
-      params: {
-        provider: "google",
-        redirect_to: redirectUrl,
-      },
-    });
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: redirectUrl,
+    },
+  });
 
-    return { data, error: null };
-  } catch (error) {
-    return {
-      data: null,
-      error: error as AxiosError,
-    };
-  }
+  return { data, error };
 };
 
 export const signOut = async (): Promise<{
