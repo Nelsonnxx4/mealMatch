@@ -1,51 +1,78 @@
 import axios from "axios";
 
-import { supabase } from "./supabase";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_KEY;
 
 export const supabaseApi = axios.create({
-  baseURL: `${SUPABASE_URL}/rest/v1`,
+  baseURL: `${supabaseUrl}`,
   headers: {
-    apikey: SUPABASE_ANON_KEY,
-    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+    apikey: supabaseAnonKey,
     "Content-Type": "application/json",
+    Authorization: `Bearer ${supabaseAnonKey}`,
   },
 });
 
-supabaseApi.interceptors.request.use(async (config) => {
-  // Get current session token if available
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+// Request interceptor to add token to requests
+supabaseApi.interceptors.request.use(
+  async (config) => {
+    // Get session from storage or context
+    const token = localStorage.getItem("supabase.auth.token");
 
-  if (session?.access_token) {
-    config.headers.Authorization = `Bearer ${session.access_token}`;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
+);
 
-  return config;
-});
+// Response interceptor for handling token refresh
+supabaseApi.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
-// Storage API instance
-export const storageApi = axios.create({
-  baseURL: `${SUPABASE_URL}/storage/v1`,
-  // headers: {
-  //   apikey: SUPABASE_ANON_KEY,
-  //   Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-  // },
-});
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
 
-storageApi.interceptors.request.use(async (config) => {
-  // Get current session token if available
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  if (session?.access_token) {
-    config.headers.Authorization = `Bearer ${session.access_token}`;
+      try {
+        // Attempt to refresh token
+        const refreshToken = localStorage.getItem("supabase.auth.refreshToken");
+
+        if (refreshToken) {
+          const { data } = await axios.post(
+            `${supabaseUrl}/auth/v1/token?grant_type=refresh_token`,
+            { refresh_token: refreshToken },
+            {
+              headers: {
+                apikey: supabaseAnonKey,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          // Update tokens in storage
+          localStorage.setItem("supabase.auth.token", data.access_token);
+          localStorage.setItem(
+            "supabase.auth.refreshToken",
+            data.refresh_token
+          );
+
+          // Retry original request with new token
+          originalRequest.headers.Authorization = `Bearer ${data.access_token}`;
+
+          return supabaseApi(originalRequest);
+        }
+      } catch (refreshError) {
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
+      }
+    }
+
+    return Promise.reject(error);
   }
-
-  config.headers["Content-Type"] = "multipart/form-data";
-
-  return config;
-});
+);

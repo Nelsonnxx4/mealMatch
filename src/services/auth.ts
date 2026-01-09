@@ -1,27 +1,57 @@
-import { supabase } from "@/config/supabase";
-import { supabaseApi } from "@/config/axios";
+import { AxiosError } from "axios";
 
-export const signUpWithEmail = async (email: string, password: string) => {
+import { supabaseApi } from "@/config/axios";
+import { supabase } from "@/config/supabase";
+
+export interface AuthResponse {
+  data: any;
+  error: Error | AxiosError | null;
+}
+
+export const signUpWithEmail = async (
+  email: string,
+  password: string
+): Promise<AuthResponse> => {
   const redirectUrl = `${window.location.origin}/`;
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: redirectUrl,
-    },
-  });
+  try {
+    const { data } = await supabaseApi.post("/auth/v1/signup", {
+      email,
+      password,
+      options: {
+        email_redirect_to: redirectUrl,
+      },
+    });
 
-  return { data, error };
+    return { data, error: null };
+  } catch (error) {
+    return {
+      data: null,
+      error: error as AxiosError,
+    };
+  }
 };
 
-export const signInWithEmail = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+export const signInWithEmail = async (
+  email: string,
+  password: string
+): Promise<AuthResponse> => {
+  try {
+    const { data } = await supabaseApi.post(
+      "/auth/v1/token?grant_type=password",
+      {
+        email,
+        password,
+      }
+    );
 
-  return { data, error };
+    return { data, error: null };
+  } catch (error) {
+    return {
+      data: null,
+      error: error as AxiosError,
+    };
+  }
 };
 
 export const signInWithGoogle = async () => {
@@ -37,30 +67,83 @@ export const signInWithGoogle = async () => {
   return { data, error };
 };
 
-export const signOut = async () => {
-  const { error } = await supabase.auth.signOut();
+export const signOut = async (): Promise<{
+  error: Error | AxiosError | null;
+}> => {
+  try {
+    await supabaseApi.post("/auth/v1/logout");
 
-  return { error };
+    return { error: null };
+  } catch (error) {
+    return { error: error as AxiosError };
+  }
 };
 
-export const getSession = async () => {
-  const { data, error } = await supabase.auth.getSession();
+export const getSession = async (): Promise<AuthResponse> => {
+  try {
+    const { data } = await supabaseApi.get("/auth/v1/session");
 
-  return { data, error };
+    return { data, error: null };
+  } catch (error) {
+    return {
+      data: null,
+      error: error as AxiosError,
+    };
+  }
 };
 
-export const getUser = async () => {
-  const { data, error } = await supabase.auth.getUser();
+export const getUser = async (): Promise<AuthResponse> => {
+  try {
+    const { data } = await supabaseApi.get("/auth/v1/user");
 
-  return { data, error };
+    return { data, error: null };
+  } catch (error) {
+    return {
+      data: null,
+      error: error as AxiosError,
+    };
+  }
 };
 
 export const getUserProfile = async (userId: string) => {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("user_id", userId)
-    .single();
+  try {
+    const { data } = await supabaseApi.get("/rest/v1/profiles", {
+      params: {
+        user_id: `eq.${userId}`,
+        select: "*",
+        limit: 1,
+      },
+    });
 
-  return { data, error };
+    return {
+      data: data && data.length > 0 ? data[0] : null,
+      error: null,
+    };
+  } catch (error) {
+    return {
+      data: null,
+      error: error as AxiosError,
+    };
+  }
+};
+
+// Optional: Add a refresh token function
+export const refreshSession = async (
+  refreshToken: string
+): Promise<AuthResponse> => {
+  try {
+    const { data } = await supabaseApi.post(
+      "/auth/v1/token?grant_type=refresh_token",
+      {
+        refresh_token: refreshToken,
+      }
+    );
+
+    return { data, error: null };
+  } catch (error) {
+    return {
+      data: null,
+      error: error as AxiosError,
+    };
+  }
 };

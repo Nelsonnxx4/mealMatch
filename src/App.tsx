@@ -5,6 +5,7 @@ import AuthPage from "@/pages/AuthPage";
 import HomePage from "@/pages/HomePage";
 import LandingPage from "@/pages/LandingPage";
 import PricingPage from "@/pages/PricingPage";
+import Errorpage from "@/pages/ErrorPage";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -22,6 +23,7 @@ function App() {
       <Route element={<LandingPage />} path="/" />
       <Route element={<PricingPage />} path="/pricing" />
       <Route element={<AuthPage />} path="/auth" />
+      <Route element={<Errorpage />} path="*" />
       <Route
         element={
           <ProtectedRoute>

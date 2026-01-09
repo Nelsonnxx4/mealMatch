@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
+import { Navigate } from "react-router-dom";
 
 import { useAuthStore } from "@/stores/authStore";
-import AuthPage from "@/pages/AuthPage";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -19,7 +19,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
 
   if (!user) {
-    return <AuthPage />;
+    return <Navigate to="/auth" replace />;
   }
 
   return <>{children}</>;
