@@ -1,12 +1,18 @@
 import { useCallback, useState } from "react";
 
-export type ToastType = "success" | "error" | "info" | "warning";
+export type ToastType =
+  | "success"
+  | "error"
+  | "info"
+  | "warning"
+  | "destructive";
 
 export interface ToastItem {
   id: number;
-  message: string;
-  type: ToastType;
-  duration: number;
+  title?: string;
+  description: string;
+  variant?: ToastType;
+  duration?: number;
 }
 
 let nextId = 1;
@@ -19,24 +25,22 @@ export const usePopToast = () => {
   }, []);
 
   const addToast = useCallback(
-    (
-      message: string,
-      options: { type?: ToastType; duration?: number } = {}
-    ) => {
-      const { type = "info", duration = 3500 } = options;
+    (options: {
+      title?: string;
+      description: string;
+      variant?: ToastType;
+      duration?: number;
+    }) => {
+      const { title, description, variant = "info", duration = 3500 } = options;
       const id = nextId++;
 
-      const toast: ToastItem = { id, message, type, duration };
+      const toast: ToastItem = { id, title, description, variant, duration };
 
       setToasts((prev) => [...prev, toast]);
 
-      if (duration > 0) {
-        setTimeout(() => removeToast(id), duration);
-      }
-
       return id;
     },
-    [removeToast]
+    []
   );
 
   return { toasts, addToast, removeToast };

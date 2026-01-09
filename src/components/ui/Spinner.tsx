@@ -21,7 +21,7 @@ const colorMap = {
   secondary: "text-secondary-500",
   white: "text-[#fff]",
   gray: "text-gray-500",
-  current: "text-",
+  current: "text-[#fff]",
 };
 
 export const Spinner: React.FC<SpinnerProps> = ({
