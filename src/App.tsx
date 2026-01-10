@@ -1,12 +1,10 @@
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { HeroUIProvider } from "@heroui/system";
+import { useHref } from "react-router-dom";
 
-import AuthPage from "@/pages/AuthPage";
-import HomePage from "@/pages/HomePage";
-import LandingPage from "@/pages/LandingPage";
-import PricingPage from "@/pages/PricingPage";
-import Errorpage from "@/pages/ErrorPage";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import { router } from "./router";
+
 import { useAuthStore } from "@/stores/authStore";
 
 function App() {
@@ -18,21 +16,14 @@ function App() {
     return () => unsubscribe();
   }, [initialize]);
 
+  // const navigate = useNavigate();
+
   return (
-    <Routes>
-      <Route
-        element={
-          <ProtectedRoute>
-            <HomePage />
-          </ProtectedRoute>
-        }
-        path="/home"
-      />
-      <Route element={<LandingPage />} path="/" />
-      <Route element={<PricingPage />} path="/pricing" />
-      <Route element={<AuthPage />} path="/auth" />
-      <Route element={<Errorpage />} path="*" />
-    </Routes>
+    <>
+      <HeroUIProvider useHref={useHref}>
+        <RouterProvider router={router} />
+      </HeroUIProvider>
+    </>
   );
 }
 
