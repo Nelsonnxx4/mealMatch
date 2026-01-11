@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Divider } from "@heroui/divider";
 
@@ -26,9 +26,11 @@ const AuthPage = () => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
 
-  // if (user) {
-  //   navigate("/home");
-  // }
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
 
   return (
     <div className="h-screen w-screen flex items-center justify-center">

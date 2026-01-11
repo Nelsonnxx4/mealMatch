@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 
 import { supabaseApi } from "@/config/axios";
+import { supabase } from "@/config/supabase";
 
 export interface UpdateProfileData {
   country_code?: string;
@@ -38,27 +39,47 @@ export const updateUserProfile = async (
 
 export const createUserProfile = async (userId: string, email: string) => {
   try {
-    const { data } = await supabaseApi.post(
-      "/rest/v1/profiles",
-      {
+    const { data, error } = await supabase
+      .from("profiles")
+      .insert({
         user_id: userId,
         email: email,
-      },
-      {
-        headers: {
-          Prefer: "return=representation",
-        },
-      }
-    );
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
 
     return {
-      data: data && data.length > 0 ? data[0] : null,
+      data,
       error: null,
     };
   } catch (error) {
     return {
       data: null,
-      error: error as AxiosError,
+      error: error as Error,
+    };
+  }
+};
+
+export const getUserProfile = async (userId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("user_id", userId)
+      .single();
+
+    if (error) throw error;
+
+    return {
+      data,
+      error: null,
+    };
+  } catch (error) {
+    return {
+      data: null,
+      error: error as Error,
     };
   }
 };

@@ -10,17 +10,7 @@ import {
   getUserProfile,
 } from "@/services/auth";
 import { updateUserProfile, createUserProfile } from "@/services/profile";
-
-interface Profile {
-  id: string;
-  user_id: string;
-  email: string | null;
-  country_code: string | null;
-  country_name: string | null;
-  country_flag: string | null;
-  currency: string | null;
-  created_at: string;
-}
+import { Profile } from "@/types/profileType";
 
 interface Country {
   code: string;

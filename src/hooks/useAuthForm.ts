@@ -6,9 +6,9 @@ import { validateAuthForm, getAuthErrorMessage } from "@/services/validation";
 import { usePopToast } from "@/hooks/useToast";
 
 export const useAuthForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { signUp, signIn, signInWithGoogle } = useAuthStore();
   const navigate = useNavigate();
@@ -93,8 +93,6 @@ export const useAuthForm = () => {
         variant: "destructive",
       });
     }
-
-    navigate("/home");
   };
 
   const resetForm = () => {

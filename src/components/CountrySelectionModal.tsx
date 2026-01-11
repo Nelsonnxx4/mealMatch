@@ -30,24 +30,24 @@ const CountrySelectionModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-lg shadow-xl w-[90%] max-w-md p-6 relative animate-in fade-in-0 zoom-in-95 duration-200">
+      <div className="bg-white rounded-lg shadow-xl w-[90%] max-w-md p-4 relative animate-in fade-in-0 zoom-in-95 duration-200">
         <button
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
           onClick={onClose}
         >
-          <X size={20} />
+          <X className="text-black" size={20} />
         </button>
 
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
-            Welcome to MealMatch! 🍽️
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold text-gray-800 mb-2 leading-6">
+            Welcome to MealMatch!
           </h2>
-          <p className="text-sm text-gray-600">
+          <p className="text-base text-gray-600 leading-5">
             Please select your country to get personalized food recommendations
           </p>
         </div>
 
-        <div className="space-y-3 mb-6 max-h-[400px] overflow-y-auto">
+        <div className="space-y-2 mb-4 max-h-[400px] overflow-y-scroll scrollbar-hide">
           {countries.map((country) => (
             <button
               key={country.code}

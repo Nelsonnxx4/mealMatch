@@ -12,7 +12,7 @@ export const signUpWithEmail = async (
   email: string,
   password: string
 ): Promise<AuthResponse> => {
-  const redirectUrl = `${window.location.origin}/`;
+  const redirectUrl = `${window.location.origin}/home`;
 
   try {
     const { data } = await supabaseApi.post("/auth/v1/signup", {
@@ -55,7 +55,7 @@ export const signInWithEmail = async (
 };
 
 export const signInWithGoogle = async () => {
-  const redirectUrl = `${window.location.origin}/`;
+  const redirectUrl = `${window.location.origin}/home`;
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",

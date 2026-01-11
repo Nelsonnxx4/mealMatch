@@ -30,7 +30,7 @@ const HomePage = () => {
   };
 
   return (
-    <main>
+    <main className="h-screen">
       <ToastContainer toasts={toasts} onRemove={removeToast} />
 
       <Header />
@@ -40,16 +40,6 @@ const HomePage = () => {
         onClose={() => setShowCountryModal(false)}
         onSelectCountry={handleSelectCountry}
       />
-
-      {/* Your main content will go here */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Welcome to MealMatch!
-        </h2>
-        <p className="text-gray-600">
-          Your personalized food recommendation app is ready.
-        </p>
-      </div>
     </main>
   );
 };

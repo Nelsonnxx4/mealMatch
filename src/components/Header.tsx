@@ -1,62 +1,65 @@
+import { useEffect, useState } from "react";
+import { Avatar } from "@heroui/avatar";
+
+import ProfileCard from "./ProfileCard";
+
 import { useAuthStore } from "@/stores/authStore";
-import { Button } from "@/components/ui/Button";
 
 const Header = () => {
-  const { user, profile, signOut, setShowCountryModal } = useAuthStore();
+  const { user } = useAuthStore();
 
-  const handleSignOut = async () => {
-    await signOut();
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
+
+  const handleOpenProfile = () => {
+    setIsProfileOpen(true);
   };
 
-  const handleChangeCountry = () => {
-    setShowCountryModal(true);
+  const handleCloseProfile = () => {
+    setIsProfileOpen(false);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close menu when scrolling
+  useEffect(() => {
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  }, [isScrolled]);
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Left side - Logo and Country */}
-          <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold text-main-300">MealMatch</h1>
+    <header
+      className={`w-full bg-white flex justify-between items-center fixed top-0 left-0 right-0 px-2 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-sm py-3"
+          : "bg-transparent py-3"
+      }`}
+    >
+      <div>
+        <h1 className="text-lg font-bold text-gray-700">MealMatch</h1>
+      </div>
 
-            {profile?.country_name && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full">
-                <span className="text-xl">{profile.country_flag}</span>
-                <span className="text-sm font-medium text-gray-700">
-                  {profile.country_name}
-                </span>
-              </div>
-            )}
-          </div>
+      <div>
+        <Avatar
+          isBordered
+          color="default"
+          radius="full"
+          size="sm"
+          src={user?.user_metadata.picture}
+          onClick={handleOpenProfile}
+        />
 
-          {/* Right side - User info and actions */}
-          <div className="flex items-center gap-4">
-            {profile?.country_name && (
-              <button
-                className="text-sm text-gray-600 hover:text-main-300 transition-colors underline"
-                onClick={handleChangeCountry}
-              >
-                Change Country
-              </button>
-            )}
-
-            <div className="flex flex-col items-end">
-              <span className="text-sm font-medium text-gray-700">
-                {user?.email}
-              </span>
-              {profile?.currency && (
-                <span className="text-xs text-gray-500">
-                  Currency: {profile.currency}
-                </span>
-              )}
-            </div>
-
-            <Button size="sm" variant="secondary" onClick={handleSignOut}>
-              Sign Out
-            </Button>
-          </div>
-        </div>
+        {isProfileOpen && <ProfileCard onClose={handleCloseProfile} />}
       </div>
     </header>
   );

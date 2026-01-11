@@ -5,7 +5,7 @@ interface ILandingPageProps {}
 const LandingPage: React.FunctionComponent<ILandingPageProps> = (props) => {
   return (
     <main>
-      <h1>hello</h1>
+      <h1>helgglo</h1>
     </main>
   );
 };
