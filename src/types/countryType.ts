@@ -3,7 +3,7 @@ import React from "react";
 export interface Country {
   code: string;
   name: string;
-  flag: React.ReactNode;
+  flag: string;
   currency: string;
   currencySymbol: string;
 }

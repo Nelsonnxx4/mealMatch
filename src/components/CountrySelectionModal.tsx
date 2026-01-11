@@ -51,16 +51,20 @@ const CountrySelectionModal = ({
           {countries.map((country) => (
             <button
               key={country.code}
-              className={`w-full p-4 rounded-lg border-2 transition-all duration-200 text-left ${
+              className={`w-full p-3 rounded-md border transition-all duration-200 text-left ${
                 selectedCountry?.code === country.code
-                  ? "border-main-300 bg-main-50"
-                  : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                  ? "border-orange-500 bg-orange-100"
+                  : "border-gray-300 hover:border-gray-300 hover:bg-gray-50"
               }`}
               onClick={() => setSelectedCountry(country)}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <span className="text-3xl">{country.flag}</span>
+                  <img
+                    alt={`${country.name} flag`}
+                    className="w-8 h-8 rounded-md object-cover"
+                    src={country.flag}
+                  />
                   <div>
                     <p className="font-semibold text-gray-800">
                       {country.name}
