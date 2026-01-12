@@ -3,16 +3,18 @@ import { AxiosError } from "axios";
 import { supabaseApi } from "@/config/axios";
 import { supabase } from "@/config/supabase";
 
-export interface UpdateProfileData {
-  country_code?: string;
-  country_name?: string;
-  country_flag?: string;
-  currency?: string;
+export interface ProfileUpdate {
+  email?: string;
+  country_code?: string | null;
+  country_name?: string | null;
+  country_flag?: string | null;
+  currency?: string | null;
+  currency_symbol?: string | null;
 }
 
 export const updateUserProfile = async (
   userId: string,
-  data: UpdateProfileData
+  data: ProfileUpdate
 ) => {
   try {
     const { data: response } = await supabaseApi.patch(

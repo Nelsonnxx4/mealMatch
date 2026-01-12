@@ -105,28 +105,6 @@ export const getUser = async (): Promise<AuthResponse> => {
   }
 };
 
-export const getUserProfile = async (userId: string) => {
-  try {
-    const { data } = await supabaseApi.get("/rest/v1/profiles", {
-      params: {
-        user_id: `eq.${userId}`,
-        select: "*",
-        limit: 1,
-      },
-    });
-
-    return {
-      data: data && data.length > 0 ? data[0] : null,
-      error: null,
-    };
-  } catch (error) {
-    return {
-      data: null,
-      error: error as AxiosError,
-    };
-  }
-};
-
 // Optional: Add a refresh token function
 export const refreshSession = async (
   refreshToken: string

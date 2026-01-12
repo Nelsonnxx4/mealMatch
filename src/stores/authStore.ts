@@ -7,17 +7,14 @@ import {
   signInWithEmail,
   signInWithGoogle,
   signOut as authSignOut,
-  getUserProfile,
 } from "@/services/auth";
-import { updateUserProfile, createUserProfile } from "@/services/profile";
+import {
+  updateUserProfile,
+  createUserProfile,
+  getUserProfile,
+} from "@/services/profile";
 import { Profile } from "@/types/profileType";
-
-interface Country {
-  code: string;
-  name: string;
-  flag: string;
-  currency: string;
-}
+import { Country } from "@/types/countryType";
 
 interface AuthState {
   user: User | null;
@@ -130,6 +127,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       country_name: country.name,
       country_flag: country.flag,
       currency: country.currency,
+      currency_symbol: country.currencySymbol,
     });
 
     if (!error && data) {
