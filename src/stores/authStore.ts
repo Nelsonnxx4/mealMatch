@@ -54,6 +54,8 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("Auth state changed:", event, session?.user?.email);
+
       set({ session, user: session?.user ?? null, loading: false });
 
       if (session?.user) {
@@ -70,6 +72,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }
     });
 
+    // Get initial session
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       set({
         session,

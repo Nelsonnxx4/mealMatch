@@ -1,33 +1,30 @@
-import { AxiosError } from "axios";
-
-import { supabaseApi } from "@/config/axios";
 import { supabase } from "@/config/supabase";
 
 export interface AuthResponse {
   data: any;
-  error: Error | AxiosError | null;
+  error: Error | null;
 }
 
 export const signUpWithEmail = async (
   email: string,
   password: string
 ): Promise<AuthResponse> => {
-  const redirectUrl = `${window.location.origin}/home`;
-
   try {
-    const { data } = await supabaseApi.post("/auth/v1/signup", {
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        email_redirect_to: redirectUrl,
-      },
     });
+
+    if (error) throw error;
 
     return { data, error: null };
   } catch (error) {
+    
+    console.error("Signup error:", error);
+
     return {
       data: null,
-      error: error as AxiosError,
+      error: error as Error,
     };
   }
 };
@@ -37,91 +34,87 @@ export const signInWithEmail = async (
   password: string
 ): Promise<AuthResponse> => {
   try {
-    const { data } = await supabaseApi.post(
-      "/auth/v1/token?grant_type=password",
-      {
-        email,
-        password,
-      }
-    );
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) throw error;
 
     return { data, error: null };
   } catch (error) {
     return {
       data: null,
-      error: error as AxiosError,
+      error: error as Error,
     };
   }
 };
 
 export const signInWithGoogle = async () => {
-  const redirectUrl = `${window.location.origin}/home`;
+  const redirectUrl = `${window.location.origin}/auth/callback`;
+
+  console.log("Starting Google sign-in with redirect:", redirectUrl);
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
       redirectTo: redirectUrl,
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent",
+      },
     },
   });
+
+  if (error) {
+    console.error("Google sign-in error:", error);
+  } else {
+    console.log("Google sign-in initiated successfully");
+  }
 
   return { data, error };
 };
 
 export const signOut = async (): Promise<{
-  error: Error | AxiosError | null;
+  error: Error | null;
 }> => {
   try {
-    await supabaseApi.post("/auth/v1/logout");
+    const { error } = await supabase.auth.signOut();
+
+    if (error) throw error;
 
     return { error: null };
   } catch (error) {
-    return { error: error as AxiosError };
+    return { error: error as Error };
   }
 };
 
 export const getSession = async (): Promise<AuthResponse> => {
   try {
-    const { data } = await supabaseApi.get("/auth/v1/session");
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error) throw error;
 
     return { data, error: null };
   } catch (error) {
     return {
       data: null,
-      error: error as AxiosError,
+      error: error as Error,
     };
   }
 };
 
 export const getUser = async (): Promise<AuthResponse> => {
   try {
-    const { data } = await supabaseApi.get("/auth/v1/user");
+    const { data, error } = await supabase.auth.getUser();
+
+    if (error) throw error;
 
     return { data, error: null };
   } catch (error) {
     return {
       data: null,
-      error: error as AxiosError,
-    };
-  }
-};
-
-// Optional: Add a refresh token function
-export const refreshSession = async (
-  refreshToken: string
-): Promise<AuthResponse> => {
-  try {
-    const { data } = await supabaseApi.post(
-      "/auth/v1/token?grant_type=refresh_token",
-      {
-        refresh_token: refreshToken,
-      }
-    );
-
-    return { data, error: null };
-  } catch (error) {
-    return {
-      data: null,
-      error: error as AxiosError,
+      error: error as Error,
     };
   }
 };

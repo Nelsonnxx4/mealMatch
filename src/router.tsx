@@ -5,6 +5,7 @@ import HomePage from "@/pages/HomePage";
 import LandingPage from "@/pages/LandingPage";
 import PricingPage from "@/pages/PricingPage";
 import Errorpage from "@/pages/ErrorPage";
+import AuthCallbackPage from "@/pages/AuthCallbackPage";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 export const router = createBrowserRouter([
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
   {
     path: "/auth",
     element: <AuthPage />,
+  },
+  {
+    path: "/auth/callback",
+    element: <AuthCallbackPage />,
   },
   {
     path: "/home",
