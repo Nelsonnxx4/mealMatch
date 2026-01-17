@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import { Avatar } from "@heroui/avatar";
 
 import { Button } from "./ui/Button";
 
@@ -47,15 +48,27 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
 
   return (
     <main
-      ref={cardRef}
-      //   onClick={onClose}
+      aria-labelledby="profile-dialog-title"
+      aria-modal="true"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+      role="dialog"
     >
-      <section className="flex flex-col justify-center items-center bg-white rounded-md shadow-md w-[90%] max-w-md p-4 relative animate-in fade-in-0 zoom-in-95 duration-200">
+      <section
+        ref={cardRef}
+        className="flex flex-col justify-center items-center bg-white rounded-md shadow-md w-[90%] max-w-md p-4 relative animate-in fade-in-0 zoom-in-95 duration-200"
+      >
         <div>
-          <img
+          {/* <img
             alt={user?.user_metadata.name}
             className="rounded-full w-12 h-12"
+            src={user?.user_metadata.picture}
+          /> */}
+
+          <Avatar
+            isBordered
+            color="default"
+            radius="full"
+            size="sm"
             src={user?.user_metadata.picture}
           />
         </div>
@@ -68,10 +81,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
         </div>
 
         <div>
-          <span>{profile?.country_flag}</span>
+          <img
+            alt={profile?.country_name ?? ""}
+            src={profile?.country_flag ?? undefined}
+          />
 
           <span>{profile?.country_name}</span>
           <span>{profile?.currency}</span>
+          <span>{profile?.currency_symbol}</span>
         </div>
 
         <Button onClick={handleSignOut}>sign out</Button>

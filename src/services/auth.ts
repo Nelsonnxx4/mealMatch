@@ -19,7 +19,6 @@ export const signUpWithEmail = async (
 
     return { data, error: null };
   } catch (error) {
-    
     console.error("Signup error:", error);
 
     return {

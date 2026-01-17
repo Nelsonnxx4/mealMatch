@@ -36,7 +36,7 @@ const AuthPage = () => {
     <div className="h-screen w-screen flex items-center justify-center">
       <ToastContainer toasts={toasts} onRemove={removeToast} />
 
-      <div className="w-[90%] md:max-w-[50%] lg:max-w-[40%] xl:max-w-[30%] flex justify-center items-center flex-col h-max md:bg-[#ffff] md:p-6 rounded md:shadow-md">
+      <div className="w-[90%] md:max-w-[50%] lg:max-w-[40%] xl:max-w-[30%] flex justify-center items-center flex-col h-max md:bg-[#ffff] md:p-6 rounded md:shadow-md space-y-6">
         <div className="flex flex-col gap-3 items-center">
           <div className="flex flex-col gap-1 items-center">
             <h1 className="text-2xl font-bold">
