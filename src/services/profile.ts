@@ -70,7 +70,7 @@ export const getUserProfile = async (userId: string) => {
       .from("profiles")
       .select("*")
       .eq("user_id", userId)
-      .single();
+      .maybeSingle(); // Changed from .single() to .maybeSingle()
 
     if (error) throw error;
 
@@ -79,6 +79,34 @@ export const getUserProfile = async (userId: string) => {
       error: null,
     };
   } catch (error) {
+    console.error("Error in getUserProfile:", error);
+
+    return {
+      data: null,
+      error: error as Error,
+    };
+  }
+};
+
+// Alternative implementation using headers explicitly
+export const getUserProfileAlt = async (userId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("user_id", userId)
+      .limit(1)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    return {
+      data,
+      error: null,
+    };
+  } catch (error) {
+    console.error("Error in getUserProfile:", error);
+
     return {
       data: null,
       error: error as Error,

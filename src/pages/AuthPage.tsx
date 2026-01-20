@@ -1,36 +1,70 @@
+// src/pages/AuthPage.tsx
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Divider } from "@heroui/divider";
 
-import { useAuthForm } from "@/hooks/useAuthForm";
 import { ToastContainer } from "@/components/Toast";
-import { useAuthStore } from "@/stores/authStore";
+import { useAuth } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { GoogleIcon } from "@/components/icons";
+import { usePopToast } from "@/hooks/useToast";
+import { useSignUp, useSignIn, useGoogleSignIn } from "@/hooks/useAuthMutation";
+import { validateAuthForm } from "@/services/validation";
 
 const AuthPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    isLoading,
-    handleSignUp,
-    handleSignIn,
-    handleGoogleSignIn,
-    toasts,
-    removeToast,
-  } = useAuthForm();
-  const { user } = useAuthStore();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { user } = useAuth();
   const navigate = useNavigate();
+  const { toasts, addToast, removeToast } = usePopToast();
+
+  const signUpMutation = useSignUp();
+  const signInMutation = useSignIn();
+  const googleSignInMutation = useGoogleSignIn();
+
+  const isLoading =
+    signUpMutation.isPending ||
+    signInMutation.isPending ||
+    googleSignInMutation.isPending;
 
   useEffect(() => {
     if (user) {
       navigate("/home");
     }
   }, [user, navigate]);
+
+  const validate = (): boolean => {
+    const result = validateAuthForm({ email, password });
+
+    if (!result.success) {
+      addToast({
+        title: "Validation Error",
+        description: result.error.errors[0]?.message || "Invalid input",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    if (isSignUp) {
+      signUpMutation.mutate({ email, password });
+    } else {
+      signInMutation.mutate({ email, password });
+    }
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignInMutation.mutate();
+  };
 
   return (
     <div className="h-screen w-screen flex items-center justify-center">
@@ -50,8 +84,8 @@ const AuthPage = () => {
 
         <div className="w-full space-y-4">
           <form
-            className=" w-full flex justify-center items-center flex-col gap-4"
-            onSubmit={isSignUp ? handleSignUp : handleSignIn}
+            className="w-full flex justify-center items-center flex-col gap-4"
+            onSubmit={handleSubmit}
           >
             <Input
               label="Email"
@@ -62,7 +96,6 @@ const AuthPage = () => {
             />
 
             <Input
-              className=""
               label="Password"
               placeholder="Enter your password"
               type="password"
@@ -82,7 +115,7 @@ const AuthPage = () => {
             </span>
           </div>
 
-          <div className="flex justify-center w-full ">
+          <div className="flex justify-center w-full">
             <Button
               icon={<GoogleIcon />}
               isLoading={isLoading}
@@ -98,7 +131,7 @@ const AuthPage = () => {
           <p className="text-sm text-default-500">
             {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
             <button
-              className="text-orange-400 underline font-semibold "
+              className="text-orange-400 underline font-semibold"
               type="button"
               onClick={() => setIsSignUp(!isSignUp)}
             >

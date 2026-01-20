@@ -1,29 +1,24 @@
-import { useEffect } from "react";
+// src/App.tsx
 import { RouterProvider } from "react-router-dom";
 import { HeroUIProvider } from "@heroui/system";
 import { useHref } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { router } from "./router";
-
-import { useAuthStore } from "@/stores/authStore";
+import { queryClient } from "./config/queryClient";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
-  const initialize = useAuthStore((state) => state.initialize);
-
-  useEffect(() => {
-    const unsubscribe = initialize();
-
-    return () => unsubscribe();
-  }, [initialize]);
-
-  // const navigate = useNavigate();
-
   return (
-    <>
-      <HeroUIProvider useHref={useHref}>
-        <RouterProvider router={router} />
-      </HeroUIProvider>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <HeroUIProvider useHref={useHref}>
+          <RouterProvider router={router} />
+        </HeroUIProvider>
+      </AuthProvider>
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+    </QueryClientProvider>
   );
 }
 
