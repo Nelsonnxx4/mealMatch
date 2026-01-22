@@ -48,93 +48,92 @@ const HomePage = () => {
   }
 
   return (
-    <main className="h-screen w-full lg:w-[70%] lg:m-auto ">
+    <main className="h-full w-full lg:w-[70%] lg:m-auto ">
       <ToastContainer toasts={toasts} onRemove={removeToast} />
 
       <Header />
 
       <div className="pt-20 px-4">
-        {/* <h1 className="text-2xl font-bold text-gray-800">
-          Welcome to MealMatch
-        </h1> */}
+        <CountrySelectionModal
+          countries={countries}
+          isOpen={showCountryModal}
+          onClose={handleCloseModal}
+          onSelectCountry={handleSelectCountry}
+        />
 
-        {/* {profile?.country_name ? (
-          <div className="mt-4 p-4 bg-white rounded-lg shadow">
-            <p className="text-gray-600">
-              Your Country: {profile.country_name}
-            </p>
-            <p className="text-gray-600">
-              Currency: {profile.currency_symbol} {profile.currency}
-            </p>
-            <button
-              className="mt-2 text-orange-500 underline"
-              onClick={() => setShowCountryModal(true)}
-            >
-              Change Country
-            </button>
-          </div>
-        ) : ( */}
-        {/* <div className="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
-          <p className="text-orange-800">
-            Please select your country to get started with personalized food
-            recommendations.
+        <section className="my-8 flex flex-col justify-center items-center">
+          <span className="bg-orange-200 border border-orange-300 rounded-full p-2 text-gray-600 font-medium">
+            what meal do you want to match?
+          </span>
+          <h1 className="my-4 text-2xl text-gray-800 font-normal">
+            Find your perfect meal
+          </h1>
+          <p className="leading-5 ">
+            Select your budget and meal type, and we&apos;ll recommend the
+            perfect meal for you
           </p>
-        </div> */}
-        {/* )} */}
-      </div>
+        </section>
 
-      <CountrySelectionModal
-        countries={countries}
-        isOpen={showCountryModal}
-        onClose={handleCloseModal}
-        onSelectCountry={handleSelectCountry}
-      />
-
-      <section>
-        <span>what meal do you want to match?</span>
-        <h1>Find your perfect meal</h1>
-        <p>
-          Select your budget and meal type, and we&apos;ll recommend the perfect
-          meal for you
-        </p>
-      </section>
-
-      <section>
-        <div>
-          <div>1</div>
-          <h2>How much do you have in mind?</h2>
-        </div>
-
-        <div>
-          {budgetTiers.map((budget) => (
-            <div key={budget.id} className={`bg-${budget.color}`}>
-              <h3>{budget.name}</h3>
-              <span>{budget.range}</span>
-              <span>{budget.desc}</span>
+        <section className="flex flex-col justify-center items-center space-y-4">
+          <div className="flex justify-between items-center gap-4 italic">
+            <div className="flex justify-center items-center bg-orange-200 border border-orange-300 h-10 w-10  rounded-full">
+              <span>1</span>
             </div>
-          ))}
-        </div>
-      </section>
+            <h2 className="text-gray-800 font-medium text-medium leading-4">
+              How much do you have in mind?
+            </h2>
+          </div>
 
-      <section>
-        <div>
-          <div>1</div>
-          <h2>How much do you have in mind?</h2>
-        </div>
+          {budgetTiers.map((budget) => {
+            const bgColor =
+              budget.id === 1
+                ? "bg-red-300 border border-red-500/80 hover:bg-red-200 focus:bg-red-400"
+                : budget.id === 2
+                  ? "bg-orange-300 border border-orange-500/80 hover:bg-orange-200 focus:bg-orange-400"
+                  : budget.id === 3
+                    ? "bg-green-300 border border-green-500/80 hover:bg-green-200 focus:bg-green-400"
+                    : "bg-gray-500";
 
-        <div>
-          {mealTimes.map((mealTime) => (
-            <div key={mealTime.id}>
-              <div>{mealTime.icon}</div>
-              <h3>{mealTime.name}</h3>
-              <span>{mealTime.desc}</span>
+            return (
+              <div
+                key={budget.id}
+                className={`${bgColor} min-w-[70%] flex flex-col p-4 rounded-lg text-gray-800 font-medium text-medium`}
+              >
+                <h3 className="underline">{budget.name}</h3>
+                <span>{budget.range}</span>
+                <span>{budget.desc}</span>
+              </div>
+            );
+          })}
+        </section>
+
+        <section className="flex flex-col  space-y-4 my-16">
+          <div className="flex items-center italic  gap-4">
+            <div className="flex justify-center items-center bg-orange-200 border border-orange-300 h-10 w-10  rounded-full">
+              <span>2</span>
             </div>
-          ))}
-        </div>
-      </section>
+            <h2 className="text-gray-800 font-medium text-medium text-center leading-4">
+              What meal is this?
+            </h2>
+          </div>
 
-      <div>
-        <Button type="button">show match</Button>
+          <div className="w-full flex flex-col justify-between items-center gap-2">
+            {mealTimes.map((mealTime) => (
+              <div
+                key={mealTime.id}
+                className="w-[70%] bg-gray-50 border border-gray-300 rounded-md p-4"
+              >
+                <div>{mealTime.icon}</div>
+                <h3 className="text-gray-700 font-medium">{mealTime.name}</h3>
+                <span>{mealTime.desc}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <div className="flex justify-center items-center pb-8">
+          <Button type="button">show match</Button>
+        </div>
       </div>
     </main>
   );
