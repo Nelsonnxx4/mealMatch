@@ -21,19 +21,34 @@ export const useProfile = () => {
 
       const { data, error } = await getUserProfile(user.id);
 
-      // If profile doesn't exist, create it
-      if (error && user?.email) {
-        const { data: newProfile } = await createUserProfile(
-          user.id,
-          user.email
+      // If profile doesn't exist (null data), create it
+      if (!data && user?.email) {
+        console.log(
+          "Profile not found, creating new profile for user:",
+          user.id
         );
+        const { data: newProfile, error: createError } =
+          await createUserProfile(user.id, user.email);
+
+        if (createError) {
+          console.error("Error creating profile:", createError);
+          throw createError;
+        }
+
         return newProfile;
+      }
+
+      // If there was an error but it's not a "not found" error, throw it
+      if (error) {
+        console.error("Error fetching profile:", error);
+        throw error;
       }
 
       return data;
     },
     enabled: !!user?.id,
     staleTime: 1000 * 60 * 5, // 5 minutes
+    retry: 1,
   });
 };
 

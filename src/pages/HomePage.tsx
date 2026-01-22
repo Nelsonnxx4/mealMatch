@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { countries } from "@/data/countryData";
 import CountrySelectionModal from "@/components/CountrySelectionModal";
 import Header from "@/components/Header";
@@ -15,15 +15,24 @@ const HomePage = () => {
 
   const [showCountryModal, setShowCountryModal] = useState(false);
 
-  // Show modal if profile exists but country is not set
-  const shouldShowModal = profile && !profile.country_code;
+  useEffect(() => {
+    if (profile && !profile.country_code && !showCountryModal) {
+      setShowCountryModal(true);
+    }
+  }, [profile, showCountryModal]);
 
-  const handleSelectCountry = async (country: Country) => {
+  const handleSelectCountry = (country: Country) => {
     updateCountryMutation.mutate(country, {
       onSuccess: () => {
         setShowCountryModal(false);
       },
     });
+  };
+
+  const handleCloseModal = () => {
+    if (profile?.country_code) {
+      setShowCountryModal(false);
+    }
   };
 
   if (profileLoading) {
@@ -45,7 +54,7 @@ const HomePage = () => {
           Welcome to MealMatch
         </h1>
 
-        {profile?.country_name && (
+        {profile?.country_name ? (
           <div className="mt-4 p-4 bg-white rounded-lg shadow">
             <p className="text-gray-600">
               Your Country: {profile.country_name}
@@ -60,17 +69,20 @@ const HomePage = () => {
               Change Country
             </button>
           </div>
+        ) : (
+          <div className="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
+            <p className="text-orange-800">
+              Please select your country to get started with personalized food
+              recommendations.
+            </p>
+          </div>
         )}
       </div>
 
       <CountrySelectionModal
         countries={countries}
-        isOpen={shouldShowModal || showCountryModal}
-        onClose={() => {
-          if (!shouldShowModal) {
-            setShowCountryModal(false);
-          }
-        }}
+        isOpen={showCountryModal}
+        onClose={handleCloseModal}
         onSelectCountry={handleSelectCountry}
       />
     </main>

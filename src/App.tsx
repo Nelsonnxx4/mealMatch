@@ -1,9 +1,8 @@
-// src/App.tsx
 import { RouterProvider } from "react-router-dom";
 import { HeroUIProvider } from "@heroui/system";
 import { useHref } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { router } from "./router";
 import { queryClient } from "./config/queryClient";
@@ -17,7 +16,7 @@ function App() {
           <RouterProvider router={router} />
         </HeroUIProvider>
       </AuthProvider>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

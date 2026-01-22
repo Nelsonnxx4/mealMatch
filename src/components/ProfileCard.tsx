@@ -2,10 +2,11 @@ import { useRef, useEffect } from "react";
 import { Avatar } from "@heroui/avatar";
 
 import { Button } from "./ui/Button";
+import Spinner from "./ui/Spinner";
+
 import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
 import { useSignOut } from "@/hooks/useAuthMutation";
-import Spinner from "./ui/Spinner";
 
 interface ProfileCardProps {
   onClose: () => void;
@@ -29,6 +30,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -42,6 +44,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
     };
 
     document.addEventListener("keydown", handleEscKey);
+
     return () => {
       document.removeEventListener("keydown", handleEscKey);
     };
