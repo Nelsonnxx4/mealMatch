@@ -24,6 +24,12 @@ export default {
         },
       },
     },
+    screens: {
+      sm: "425px",
+      md: "760px",
+      lg: "1024px",
+      xl: "1280px",
+    },
   },
   darkMode: "class",
   plugins: [heroui()],

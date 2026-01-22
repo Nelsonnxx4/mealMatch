@@ -1,8 +1,9 @@
-// src/components/ProtectedRoute.tsx
 import { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+
 import Spinner from "./ui/Spinner";
+
+import { useAuth } from "@/contexts/AuthContext";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -14,13 +15,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Spinner size="lg" label="Loading..." />
+        <Spinner label="Loading..." size="lg" />
       </div>
     );
   }
 
   if (!user) {
-    return <Navigate to="/auth" replace />;
+    return <Navigate replace to="/auth" />;
   }
 
   return <>{children}</>;

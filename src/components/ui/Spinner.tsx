@@ -17,7 +17,7 @@ const sizeMap = {
 };
 
 const colorMap = {
-  primary: "text-primary-300",
+  primary: "text-orange-500",
   secondary: "text-secondary-500",
   white: "text-[#fff]",
   gray: "text-gray-500",

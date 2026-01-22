@@ -54,37 +54,37 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
     <main
       aria-labelledby="profile-dialog-title"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center sm:justify-end sm:items-start bg-black/40 backdrop-blur-sm"
       role="dialog"
     >
       <section
         ref={cardRef}
-        className="flex flex-col justify-center items-center bg-white rounded-md shadow-md w-[90%] max-w-md p-6 relative animate-in fade-in-0 zoom-in-95 duration-200"
+        className="flex flex-col justify-center items-center  bg-white rounded-md shadow-md w-[90%] sm:w-[50%] md:w-[40%] lg:w-[30%] xl:w-[20%] p-6 sm:p-4 sm:mt-20 sm:mr-5 lg:mt-24 lg:mr-60 relative animate-in fade-in-0 zoom-in-95 duration-200"
       >
         {isLoading ? (
           <Spinner size="lg" />
         ) : (
           <>
-            <div className="mb-4">
+            <div className="mb-4 md:mb-2">
               <Avatar
                 isBordered
                 color="default"
                 radius="full"
                 size="lg"
-                src={user?.user_metadata.picture}
+                src={profile.avatarUrl || user?.user_metadata.picture}
               />
             </div>
 
-            <div className="flex flex-col justify-center items-center mb-4 text-center">
+            <div className="flex flex-col justify-center items-center mb-4 md:mb-2 text-center">
               <h2 className="text-xl font-bold text-gray-800">
-                {user?.user_metadata.name || "User"}
+                {profile.name || user?.user_metadata.name || "User"}
               </h2>
-              <p className="text-sm text-gray-600">{user?.email}</p>
+              <p className="text-sm text-gray-600">{profile.email}</p>
             </div>
 
             {profile?.country_name && (
-              <div className="w-full bg-gray-50 rounded-lg p-4 mb-4">
-                <div className="flex items-center gap-3 mb-2">
+              <div className="w-full bg-gray-50 rounded-lg p-4 sm:p-2 md:py-1 mb-4">
+                <div className="flex items-center gap-3 md:gap-2 mb-2">
                   <img
                     alt={profile.country_name}
                     className="w-8 h-8 rounded"
@@ -94,9 +94,16 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
                     <p className="font-semibold text-gray-800">
                       {profile.country_name}
                     </p>
-                    <p className="text-sm text-gray-600">
-                      {profile.currency_symbol} {profile.currency}
-                    </p>
+
+                    <div className="flex justify-between items-center gap-1">
+                      <p className="text-sm text-gray-600">
+                        {profile.currency_symbol}
+                      </p>
+
+                      <p className="text-sm text-gray-600">
+                        ({profile.currency})
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
