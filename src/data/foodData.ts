@@ -1,4 +1,6 @@
-export const sampleFoods = [
+import { Food } from "@/types/foodType";
+
+export const sampleFoods: Food[] = [
   {
     id: 1,
     name: "Bread and Akara",

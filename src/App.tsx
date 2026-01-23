@@ -10,14 +10,16 @@ import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <HeroUIProvider useHref={useHref}>
-          <RouterProvider router={router} />
-        </HeroUIProvider>
-      </AuthProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <HeroUIProvider useHref={useHref}>
+            <RouterProvider router={router} />
+          </HeroUIProvider>
+        </AuthProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </>
   );
 }
 
