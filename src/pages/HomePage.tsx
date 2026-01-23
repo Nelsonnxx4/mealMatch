@@ -11,6 +11,7 @@ import Spinner from "@/components/ui/Spinner";
 import { budgetTiers } from "@/data/budgetData";
 import { mealTimes } from "@/data/mealTimesData";
 import { Button } from "@/components/ui/Button";
+import ProfileCard from "@/components/ProfileCard";
 
 const HomePage = () => {
   const { data: profile, isLoading: profileLoading } = useProfile();
@@ -39,6 +40,16 @@ const HomePage = () => {
     }
   };
 
+  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
+
+  const handleOpenProfile = () => {
+    setIsProfileOpen(true);
+  };
+
+  const handleCloseProfile = () => {
+    setIsProfileOpen(false);
+  };
+
   if (profileLoading) {
     return (
       <div className="h-screen flex items-center justify-center">
@@ -48,12 +59,20 @@ const HomePage = () => {
   }
 
   return (
-    <main className="h-full w-full lg:w-[70%] lg:m-auto ">
+    <main
+      className={`h-full w-full lg:w-[70%] lg:m-auto ${isProfileOpen ? "overflow-hidden" : ""}`}
+    >
       <ToastContainer toasts={toasts} onRemove={removeToast} />
 
-      <Header />
+      <Header
+        isProfileOpen={isProfileOpen}
+        onCloseProfile={handleCloseProfile}
+        onOpenProfile={handleOpenProfile}
+      />
 
-      <div className="pt-20 px-4">
+      {isProfileOpen && <ProfileCard onClose={handleCloseProfile} />}
+
+      <div className="pt-20 px-4 z-10">
         <CountrySelectionModal
           countries={countries}
           isOpen={showCountryModal}
@@ -61,7 +80,7 @@ const HomePage = () => {
           onSelectCountry={handleSelectCountry}
         />
 
-        <section className="my-8 flex flex-col justify-center items-center">
+        <section className="my-8 xl:mt-20 flex flex-col justify-center items-center">
           <span className="bg-orange-200 border border-orange-300 rounded-full p-2 text-gray-600 font-medium">
             what meal do you want to match?
           </span>
@@ -97,7 +116,7 @@ const HomePage = () => {
             return (
               <div
                 key={budget.id}
-                className={`${bgColor} min-w-[70%] flex flex-col p-4 rounded-lg text-gray-800 font-medium text-medium`}
+                className={`${bgColor} min-w-[70%] xl:min-w-[40%] flex flex-col p-4 rounded-lg text-gray-800 font-medium text-medium cursor-pointer`}
               >
                 <h3 className="underline">{budget.name}</h3>
                 <span>{budget.range}</span>
@@ -107,8 +126,8 @@ const HomePage = () => {
           })}
         </section>
 
-        <section className="flex flex-col  space-y-4 my-16">
-          <div className="flex items-center italic  gap-4">
+        <section className="flex flex-col justify-start items-start md:justify-center md:items-center space-y-4 my-16">
+          <div className="flex justify-between items-center gap-4 italic">
             <div className="flex justify-center items-center bg-orange-200 border border-orange-300 h-10 w-10  rounded-full">
               <span>2</span>
             </div>
@@ -121,7 +140,7 @@ const HomePage = () => {
             {mealTimes.map((mealTime) => (
               <div
                 key={mealTime.id}
-                className="w-[70%] bg-gray-50 border border-gray-300 rounded-md p-4"
+                className="min-w-[70%] xl:min-w-[40%] bg-gray-50 border border-gray-300 rounded-lg p-4 cursor-pointer"
               >
                 <div>{mealTime.icon}</div>
                 <h3 className="text-gray-700 font-medium">{mealTime.name}</h3>
@@ -133,6 +152,10 @@ const HomePage = () => {
 
         <div className="flex justify-center items-center pb-8">
           <Button type="button">show match</Button>
+        </div>
+
+        <div className="flex justify-center items-center pb-8">
+          <span className="underline text-orange-600 font-medium">History</span>
         </div>
       </div>
     </main>

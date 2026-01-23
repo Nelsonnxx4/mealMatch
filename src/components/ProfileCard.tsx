@@ -31,8 +31,12 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
 
     document.addEventListener("mousedown", handleClickOutside);
 
+    document.body.style.overflow = "hidden";
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+
+      document.body.style.overflow = "unset";
     };
   }, [onClose]);
 
@@ -56,6 +60,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
       aria-modal="true"
       className="fixed inset-0 z-50 flex items-center justify-center sm:justify-end sm:items-start bg-black/40 backdrop-blur-sm"
       role="dialog"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999,
+      }}
     >
       <section
         ref={cardRef}
