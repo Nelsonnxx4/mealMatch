@@ -65,12 +65,7 @@ export const TwitterIcon: React.FC<IconSvgProps> = ({
   );
 };
 
-export const GoogleIcon: React.FC<IconSvgProps> = ({
-  size = 30,
-  width,
-  height,
-  ...props
-}) => {
+export const GoogleIcon: React.FC<IconSvgProps> = ({ size = 30 }) => {
   return (
     <svg
       height={size}

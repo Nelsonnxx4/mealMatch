@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Avatar } from "@heroui/avatar";
 
-import ProfileCard from "./ProfileCard";
-
 import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
 
@@ -12,7 +10,7 @@ interface HeaderProps {
   onCloseProfile?: () => void;
 }
 
-const Header = ({ isProfileOpen, onOpenProfile }: HeaderProps) => {
+const Header = ({ onOpenProfile }: HeaderProps) => {
   const { user } = useAuth();
   const { data: profile } = useProfile();
 

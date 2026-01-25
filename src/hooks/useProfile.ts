@@ -1,5 +1,7 @@
-// src/hooks/useProfile.ts
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { usePopToast } from "./useToast";
+
 import { useAuth } from "@/contexts/AuthContext";
 import {
   getUserProfile,
@@ -7,7 +9,6 @@ import {
   createUserProfile,
 } from "@/services/profile";
 import { Country } from "@/types/countryType";
-import { usePopToast } from "./useToast";
 
 export const PROFILE_QUERY_KEY = "profile";
 
@@ -38,7 +39,6 @@ export const useProfile = () => {
         return newProfile;
       }
 
-      // If there was an error but it's not a "not found" error, throw it
       if (error) {
         console.error("Error fetching profile:", error);
         throw error;
@@ -47,7 +47,7 @@ export const useProfile = () => {
       return data;
     },
     enabled: !!user?.id,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 60 * 5,
     retry: 1,
   });
 };
@@ -72,10 +72,10 @@ export const useUpdateCountry = () => {
       });
 
       if (error) throw error;
+
       return data;
     },
-    onSuccess: (data, country) => {
-      // Invalidate and refetch profile
+    onSuccess: (_data, country) => {
       queryClient.invalidateQueries({ queryKey: [PROFILE_QUERY_KEY] });
 
       addToast({
@@ -84,7 +84,7 @@ export const useUpdateCountry = () => {
         variant: "success",
       });
     },
-    onError: (error: Error) => {
+    onError: (_error: Error) => {
       addToast({
         title: "Error",
         description: "Failed to update country. Please try again.",

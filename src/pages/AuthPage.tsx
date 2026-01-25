@@ -42,7 +42,7 @@ const AuthPage = () => {
     if (!result.success) {
       addToast({
         title: "Validation Error",
-        description: result.error.errors[0]?.message || "Invalid input",
+        description: result.error.issues[0]?.message || "Invalid input",
         variant: "destructive",
       });
       return false;

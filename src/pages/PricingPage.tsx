@@ -1,9 +1,11 @@
-import * as React from "react";
-
 interface IPricingPageProps {}
 
-const PricingPage: React.FunctionComponent<IPricingPageProps> = (props) => {
-  return;
+const PricingPage: React.FC<IPricingPageProps> = () => {
+  return (
+    <main>
+      <h1>pricing</h1>
+    </main>
+  );
 };
 
 export default PricingPage;
