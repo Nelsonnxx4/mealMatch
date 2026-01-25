@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { countries } from "@/data/countryData";
 import CountrySelectionModal from "@/components/CountrySelectionModal";
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import { usePopToast } from "@/hooks/useToast";
 import { ToastContainer } from "@/components/Toast";
 import { Country } from "@/types/countryType";
