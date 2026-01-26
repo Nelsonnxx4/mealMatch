@@ -37,7 +37,7 @@ export const Button = ({
       "bg-orange-500 text-white hover:bg-main-100 shadow-lg focus:ring-orange-50 ",
     secondary: "bg-gray-100 text-orange-200 shadow-md focus:ring-orange-50",
     outline:
-      "border-1 border-slate-300 hover:bg-slate-100 focus:ring-orange-500",
+      "text-black/70 rounded-md border-1 border-orange-300 hover:bg-slate-100 focus:ring-orange-500 focus:outline-1",
   };
 
   const sizes = {

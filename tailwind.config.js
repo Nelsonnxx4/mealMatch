@@ -23,6 +23,15 @@ export default {
           50: "#fffff",
         },
       },
+      animation: {
+        "scroll-left": "scroll-left 20s linear infinite",
+      },
+      keyframes: {
+        "scroll-left": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
     },
     screens: {
       sm: "425px",
