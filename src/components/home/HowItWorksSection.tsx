@@ -7,7 +7,8 @@ const steps = [
     description:
       "Choose from 10+ African countries to get authentic local dish recommendations.",
     color: "text-primary",
-    bg: "bg-primary/10",
+    bg: "bg-violet-300",
+    border: "border border-violet-500",
   },
   {
     icon: Coins,
@@ -15,7 +16,8 @@ const steps = [
     description:
       "Pick your money status - Sapa, Guidance, or Baller. No judgment, just food!",
     color: "text-guidance",
-    bg: "bg-guidance/10",
+    bg: "bg-green-300",
+    border: "border border-green-500",
   },
   {
     icon: Utensils,
@@ -23,7 +25,8 @@ const steps = [
     description:
       "Breakfast, lunch, or dinner? We'll tailor recommendations to your time of day.",
     color: "text-baller",
-    bg: "bg-baller/10",
+    bg: "bg-red-300",
+    border: "border border-red-500",
   },
   {
     icon: Sparkles,
@@ -31,62 +34,69 @@ const steps = [
     description:
       "Receive personalized meal suggestions with prices and where to find them.",
     color: "text-sapa",
-    bg: "bg-sapa/10",
+    bg: "bg-orange-300",
+    border: "border border-orange-500",
   },
 ];
 
 const HowItWorksSection = () => {
   return (
-    <section className="py-20 bg-white" id="how-it-works">
+    <section className="py-14 bg-white" id="how-it-works">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+        <div className=" max-w-2xl mx-auto mb-16">
+          <span className="text-gray-700 font-semibold text-medium ">
             Simple Process
           </span>
-          <h2 className="text-3xl sm:text-4xl font-heading font-bold mt-2 mb-4">
-            How <span className="text-gradient">ChopWise</span> Works
+          <h2 className="text-2xl sm:text-3xl text-gray-700 font-bold my-2">
+            How{" "}
+            <span className="bg-gradient-to-br from-orange-600 to-pink-400 bg-clip-text text-transparent">
+              mealMatch
+            </span>{" "}
+            Works
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Four simple steps to your next delicious meal. No stress, no wahala!
+          <p className=" text-lg leading-5">
+            Four simple steps to your next delicious meal. No stress, no more
+            indecision
           </p>
         </div>
 
         {/* Steps */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
           {steps.map((step, index) => {
             const Icon = step.icon;
 
             return (
               <div
                 key={step.title}
-                className="relative text-center animate-fade-in"
+                className="relative text-center animate-fade-in mb-8"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {/* Connector Line */}
                 {index < steps.length - 1 && (
                   <div className="hidden lg:block absolute top-12 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-border to-transparent" />
                 )}
 
-                {/* Step Number */}
-                <div className="absolute -top-2 -left-2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
-                  {index + 1}
-                </div>
+                <div className="flex   items-start justify-between gap-10 ">
+                  <div className=" w-12 h-9 px-3 rounded-full bg-orange-400 border border-orange-600 text-white flex items-center justify-center text-sm font-bold">
+                    {index + 1}
+                  </div>
 
-                {/* Icon */}
-                <div
-                  className={`w-24 h-24 mx-auto rounded-2xl ${step.bg} flex items-center justify-center mb-6 transition-transform hover:scale-110`}
-                >
-                  <Icon className={`w-10 h-10 ${step.color}`} />
-                </div>
+                  <div className="flex flex-col justify-start items-start">
+                    {/* Icon */}
+                    <div
+                      className={`w-24 h-24  rounded-2xl ${step.bg} ${step.border} flex items-center justify-center mb-6 transition-transform hover:scale-110`}
+                    >
+                      <Icon className="w-8 h-8 text-gray-50 " />
+                    </div>
 
-                {/* Content */}
-                <h3 className="text-lg font-heading font-semibold mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {step.description}
-                </p>
+                    {/* Content */}
+                    <h3 className="text-lg font-heading font-medium mb-1">
+                      {step.title}
+                    </h3>
+                    <p className=" text-left leading-5 text-[16px]">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
               </div>
             );
           })}

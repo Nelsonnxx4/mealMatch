@@ -29,7 +29,7 @@ body {
 }
 
 .animate-scroll {
-  animation: scroll 5s linear infinite;
+  animation: scroll 10s linear infinite;
 
   &:hover {
     animation-play-state: paused;

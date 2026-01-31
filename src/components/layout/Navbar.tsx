@@ -7,12 +7,18 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b ">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div>
-            <h1>mealMatch</h1>
+            <h1
+              className="bg-gradient-to-br from-orange-500 to-pink-500
+bg-clip-text
+  text-transparent text-xl font-semibold"
+            >
+              mealMatch
+            </h1>
           </div>
 
           {/* Desktop Navigation */}
@@ -39,8 +45,8 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost">Log in</Button>
-            <Button variant="hero">Get Started</Button>
+            <Button type="button">Log in</Button>
+            <Button variant="outline">Get Started</Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -75,10 +81,8 @@ const Navbar = () => {
                 Countries
               </a>
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                <Button className="w-full" variant="ghost">
-                  Log in
-                </Button>
-                <Button className="w-full" variant="hero">
+                <Button className="w-full">Log in</Button>
+                <Button className="w-full" variant="outline">
                   Get Started
                 </Button>
               </div>

@@ -1,10 +1,3 @@
-// import {
-//   Card,
-//   CardContent,
-//   CardHeader,
-//   CardTitle,
-//   CardDescription,
-// } from "@/components/ui/card";
 import { Wallet, TrendingUp, Crown, ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
@@ -62,18 +55,18 @@ const tiers = [
 
 const BudgetSection = () => {
   return (
-    <section className="py-20 bg-background" id="budget-tiers">
+    <section className="py-14 bg-white" id="budget-tiers">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+        <div className=" max-w-2xl mx-auto mb-16">
+          <span className="text-green-600 font-semibold text-medium ">
             Budget Tiers
           </span>
-          <h2 className="text-3xl sm:text-4xl font-heading font-bold mt-2 mb-4">
+          <h2 className="text-2xl sm:text-3xl text-gray-700  font-bold leading-6 mt-2 mb-4">
             What&apos;s Your <span className="text-gradient">Money Status</span>
             ?
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-lg leading-5">
             We understand the levels. Tell us your budget and we&apos;ll
             recommend meals that match.
           </p>
@@ -87,7 +80,7 @@ const BudgetSection = () => {
             return (
               <article
                 key={tier.id}
-                className="relative overflow-hidden group cursor-pointer hover:-translate-y-2 transition-all duration-300 animate-fade-in"
+                className="relative overflow-hidden group cursor-pointer hover:-translate-y-2 transition-all duration-300 animate-fade-in bg-gray-50"
                 style={{ animationDelay: `${index * 0.1}s` }}
                 // type={tier.variant}
               >

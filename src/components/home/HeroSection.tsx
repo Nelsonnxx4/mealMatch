@@ -42,10 +42,10 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className="w-full relative overflow-hidden mt-8 py-4">
+      <div className="w-[1500px] relative overflow-hidden mt-8 py-4">
         {/* Gradient overlays */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
+        <div className="hidden md:block absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-white to-transparent z-10" />
+        <div className="hidden md:block  absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white via-white/50 to-transparent z-10" />
 
         {/* Sliding container */}
         <div className="flex gap-4 animate-scroll">
@@ -53,7 +53,7 @@ const HeroSection = () => {
           {heroImages.map((image) => (
             <div
               key={`first-${image.id}`}
-              className="relative flex-shrink-0 overflow-hidden rounded-xl w-64 h-64"
+              className="relative flex-shrink-0 overflow-hidden rounded-xl w-60 h-44"
             >
               <img
                 alt={image.alt}
@@ -64,19 +64,19 @@ const HeroSection = () => {
             </div>
           ))}
           {/* Duplicate set for seamless loop */}
-          {/* {heroImages.map((image) => (
+          {heroImages.map((image) => (
             <div
               key={`second-${image.id}`}
-              className="relative flex-shrink-0 overflow-hidden rounded-xl w-64 h-64"
+              className="relative flex-shrink-0 overflow-hidden rounded-xl w-60 h-44"
             >
               <img
                 alt={image.alt}
-                className="w-full h-full object-cover hover:scale-110 transition-transform duration-1000"
+                className="w-full h-full object-cover hover:scale-110 transition-transform duration-2000"
                 loading="lazy"
                 src={image.src}
               />
             </div>
-          ))} */}
+          ))}
         </div>
       </div>
     </section>
