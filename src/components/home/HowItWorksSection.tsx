@@ -89,7 +89,7 @@ const HowItWorksSection = () => {
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-lg font-heading font-medium mb-1">
+                    <h3 className="text-gray-600 text-lg font-heading font-medium mb-1">
                       {step.title}
                     </h3>
                     <p className=" text-left leading-5 text-[16px]">

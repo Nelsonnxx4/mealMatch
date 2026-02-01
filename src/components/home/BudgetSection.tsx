@@ -4,12 +4,11 @@ import { Button } from "@/components/ui/Button";
 
 const tiers = [
   {
-    id: "sapa",
+    id: 1,
     name: "Sapa Mode",
     range: "₦500 - ₦2,000",
     description:
       "When pocket dey cry but belle must chop. Budget-friendly meals that still satisfy.",
-    emoji: "😅",
     icon: Wallet,
     variant: "sapa" as const,
     examples: [
@@ -20,12 +19,11 @@ const tiers = [
     ],
   },
   {
-    id: "guidance",
+    id: 2,
     name: "Guidance Level",
     range: "₦2,000 - ₦8,000",
     description:
       "You're managing well! Enjoy balanced meals without breaking the bank.",
-    emoji: "😌",
     icon: TrendingUp,
     variant: "guidance" as const,
     examples: [
@@ -36,12 +34,11 @@ const tiers = [
     ],
   },
   {
-    id: "baller",
+    id: 3,
     name: "Baller Status",
     range: "₦8,000 - ₦15,000+",
     description:
       "Money dey! Treat yourself to premium dishes and fine dining experiences.",
-    emoji: "🤑",
     icon: Crown,
     variant: "baller" as const,
     examples: [
@@ -55,18 +52,16 @@ const tiers = [
 
 const BudgetSection = () => {
   return (
-    <section className="py-14 bg-white" id="budget-tiers">
+    <section className="py-14 bg-gray-50/90" id="budget-tiers">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className=" max-w-2xl mx-auto mb-16">
-          <span className="text-green-600 font-semibold text-medium ">
+        <div className=" max-w-2xl mx-auto mb-10">
+          <span className="text-green-700 font-semibold text-medium ">
             Budget Tiers
           </span>
-          <h2 className="text-2xl sm:text-3xl text-gray-700  font-bold leading-6 mt-2 mb-4">
-            What&apos;s Your <span className="text-gradient">Money Status</span>
-            ?
+          <h2 className="text-2xl sm:text-3xl text-gray-700  font-bold leading-6 my-2">
+            What&apos;s Your Money Status?
           </h2>
-          <p className="text-lg leading-5">
+          <p className="text-medium font-normal ">
             We understand the levels. Tell us your budget and we&apos;ll
             recommend meals that match.
           </p>
@@ -80,35 +75,25 @@ const BudgetSection = () => {
             return (
               <article
                 key={tier.id}
-                className="relative overflow-hidden group cursor-pointer hover:-translate-y-2 transition-all duration-300 animate-fade-in bg-gray-50"
+                className="relative overflow-hidden group cursor-pointer hover:-translate-y-2 transition-all duration-300 animate-fade-in bg-white shadow-sm rounded-md p-4"
                 style={{ animationDelay: `${index * 0.1}s` }}
-                // type={tier.variant}
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                        tier.variant === "sapa"
-                          ? "bg-sapa/20"
-                          : tier.variant === "guidance"
-                            ? "bg-guidance/20"
-                            : "bg-baller/20"
-                      }`}
-                    >
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gray-50/10">
                       <Icon
-                        className={`w-6 h-6 ${
+                        className={`w-6 h-6  ${
                           tier.variant === "sapa"
-                            ? "text-sapa"
+                            ? "text-red-600"
                             : tier.variant === "guidance"
-                              ? "text-guidance"
-                              : "text-baller"
+                              ? "text-orange-600"
+                              : "text-green-600"
                         }`}
                       />
                     </div>
-                    <span className="text-4xl">{tier.emoji}</span>
                   </div>
                   <div>
-                    <h3 className="text-xl">{tier.name}</h3>
+                    <h3 className="text-gray-800 text-xl">{tier.name}</h3>
                     <p
                       className={`text-lg font-bold mt-1 ${
                         tier.variant === "sapa"

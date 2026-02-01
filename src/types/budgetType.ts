@@ -4,4 +4,5 @@ export interface budgetType {
   range: string | number;
   color?: string;
   desc: string;
+  examples?: string[];
 }
